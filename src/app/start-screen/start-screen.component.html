@@ -1,16 +1,15 @@
 <ion-content [fullscreen]="true">
   <div class="container">
     <ion-img
-      src="../../assets/img/logo1.png"
+      [src]="logoApp"
       alt="Health Monitor Logo"
       class="centered-image"
     ></ion-img>
     <h1>Health Monitor</h1>
     <p>Monitoramento Cardíaco</p>
     <p class="subtitle">Solução definitiva para o acompanhamento da saúde cardíaca.</p>
-    <div class="buttons">
-      <ion-button expand="block" color="primary" (click)="onClickLogin()">Log In</ion-button>
-      <ion-button expand="block" fill="outline" color="secondary" (click)="onClickRegister()">Registrar</ion-button>
-    </div>
+
+    <ion-button expand="block" color="primary" class="login-button" (click)="onClickLogin()">Log In</ion-button>
+    <ion-button expand="block" fill="outline" color="secondary" class="register-button" (click)="onClickRegister()">Registrar</ion-button>
   </div>
 </ion-content>
