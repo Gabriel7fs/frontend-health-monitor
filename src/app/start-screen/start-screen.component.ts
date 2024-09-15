@@ -19,7 +19,7 @@ export class StartScreenComponent {
   }
 
   onClickRegister(): void {
-    alert("Em desenvolvimento");
+    this.router.navigateByUrl('/register');
   }
 
 }
