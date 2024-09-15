@@ -9,19 +9,23 @@
 
   h1 {
     font-size: 24px;
+    font-weight: bolder;
     color: #0070f3;
     margin-top: 20px;
+    margin-bottom: 0px;
   }
 
   p {
     font-size: 18px;
+    font-weight: 300;
+    margin-top: 0px;
     color: #0070f3;
   }
 
   .subtitle {
     font-size: 14px;
+    font-weight: 300;
     color: #8c8c8c;
-    margin-top: 10px;
     margin-bottom: 40px;
   }
 
@@ -70,15 +74,15 @@
 @media (max-width: 767px) {
   .container {
     h1 {
-      font-size: 20px;
+      font-size: 25px;
     }
 
     p {
-      font-size: 16px;
+      font-size: 18px;
     }
 
     .subtitle {
-      font-size: 12px;
+      font-size: 14px;
     }
 
     .centered-image {

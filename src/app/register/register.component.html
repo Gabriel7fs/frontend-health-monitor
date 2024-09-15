@@ -1,0 +1,112 @@
+<ion-content [fullscreen]="true">
+  <div id="login-container">
+    <div class="header">
+      <div class="back">
+        <ion-back-button defaultHref="/" class="back-button"></ion-back-button>
+      </div>
+      <div class="toggle">
+        <ion-segment [(ngModel)]="selectedSegment" (ionChange)="onSegmentChange($event)">
+          <ion-segment-button value="paciente">
+            <ion-label>Paciente</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="monitor">
+            <ion-label>Monitor</ion-label>
+          </ion-segment-button>
+        </ion-segment>
+      </div>
+    </div>
+
+    <div class="help">
+      <h3 *ngIf="selectedSegment === 'paciente'">
+        Crie sua conta para monitorar sua frequência cardíaca e permitir que seus contatos de emergência também acompanhem sua saúde cardíaca.
+      </h3>
+      <h3 *ngIf="selectedSegment === 'monitor'">
+        Crie sua conta para monitorar os dados de um paciente e acompanhar sua frequência cardíaca.
+      </h3>
+    </div>
+
+    <form [formGroup]="registerForm" (ngSubmit)="onRegister()">
+      <div class="input-item">
+        <ion-input fill="outline"
+          label="Nome completo"
+          labelPlacement="floating"
+          formControlName="name"
+          maxlength="50"
+          errorText="Informe seu nome completo"
+        ></ion-input>
+      </div>
+
+      <div class="input-item">
+        <ion-input fill="outline"
+          label="CPF"
+          labelPlacement="floating"
+          formControlName="cpf"
+          maxlength="14"
+          (keyup)="applyCPFMask($event)"
+          errorText="Informe seu o CPF"
+        ></ion-input>
+      </div>
+
+      <div class="input-item" *ngIf="selectedSegment === 'monitor'">
+        <ion-input fill="outline"
+          label="CPF do paciente"
+          labelPlacement="floating"
+          formControlName="cpf"
+          maxlength="14"
+          (keyup)="applyCPFMask($event)"
+          errorText="Informe o CPF do paciente"
+        ></ion-input>
+      </div>
+
+      <div class="input-item" *ngIf="selectedSegment === 'paciente'">
+        <ion-input fill="outline"
+          label="Data de nascimento"
+          labelPlacement="floating"
+          formControlName="birthdate"
+          maxlength="10"
+          (keyup)="applyBirthdateMask($event)"
+          errorText="Informe sua data de nascimento"
+        ></ion-input>
+      </div>
+
+      <div class="input-item" *ngIf="selectedSegment === 'paciente'">
+        <ion-input fill="outline"
+          label="Contato de emergência"
+          labelPlacement="floating"
+          formControlName="emergencyContact"
+          maxlength="15"
+          (keyup)="applyPhoneMask($event)"
+          errorText="Informe um contato de emergência"
+        ></ion-input>
+      </div>
+
+      <div class="input-item">
+        <ion-input fill="outline"
+          label="Senha"
+          labelPlacement="floating"
+          type="password"
+          [type]="showPassword ? 'text' : 'password'"
+          formControlName="password"
+          maxlength="30"
+          errorText="Informe uma senha"
+        ></ion-input>
+        <ion-buttons slot="end">
+          <ion-button fill="clear" (click)="togglePasswordVisibility()">
+            <ion-icon slot="icon-only" [name]="showPassword ? 'eye-off-outline' : 'eye-outline'"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </div>
+      <ion-button expand="block" class="login-button" type="submit">Registrar</ion-button>
+      <ion-toast [isOpen]="isToastOpen" message="Informe os campos necessários" [duration]="2000"></ion-toast>
+    </form>
+    <ion-toast
+      [isOpen]="isToastOpen"
+      message="Informe os campos necessários!"
+      [duration]="2000"
+      (didDismiss)="setOpen(false)">
+    </ion-toast>
+    <div class="signup">
+      <p>Já possui uma conta? <a href="../login">Login</a></p>
+    </div>
+  </div>
+</ion-content>

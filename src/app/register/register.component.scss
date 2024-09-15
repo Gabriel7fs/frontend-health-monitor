@@ -10,45 +10,43 @@ ion-content {
     padding: 0 16px;
     text-align: center;
 
-    div:first-child {
-      position: relative;
+    .header {
       display: flex;
       align-items: center;
-      justify-content: center;
+      justify-content: space-between;
       width: 100%;
-      padding-top: 24px;
-      padding-bottom: 24px;
+      padding: 12px 0;
     }
 
     .back-button {
-      position: absolute;
-      left: 0;
       color: #0070f3;
+      width: auto;
+      padding-left: 0;
+      margin-right: 8px;
     }
 
-    h1 {
-      font-size: 28px;
-      color: #0070f3;
-      font-weight: bold;
-      margin: 0;
+    .toggle {
+      flex-grow: 1;
     }
 
-    div:nth-child(2) {
+    .help {
       text-align: left;
       width: 100%;
       padding-top: 30px;
       padding-bottom: 25px;
     }
 
-    h2 {
-      font-size: 25px;
-      font-weight: bold;
+    h3 {
+      text-align: justify;
+      font-size: 18px;
+      font-weight: 500;
       color: #0070f3;
     }
 
     .input-item {
       width: 100%;
       position: relative;
+      margin-bottom: 20px;
     }
 
     ion-input {
@@ -56,6 +54,7 @@ ion-content {
       text-align: left;
       width: 100%;
       border-radius: 15px;
+      padding: 10px;
     }
 
     ion-buttons {
@@ -76,7 +75,7 @@ ion-content {
       font-size: 14px;
       color: #0070f3;
       padding-top: 10px;
-      padding-bottom: 20px;
+      padding-bottom: 50px;
       text-decoration: none;
       align-self: flex-end;
     }
@@ -107,7 +106,6 @@ ion-content {
   }
 }
 
-/* Responsividade para celulares com largura inferior a 600px */
 @media screen and (max-width: 600px) {
   #login-container {
     padding: 0 8px;
@@ -128,10 +126,13 @@ ion-content {
     .forgot-password {
       font-size: 12px;
     }
+
+    .toggle {
+      width: 100%;
+    }
   }
 }
 
-/* Responsividade para tablets com largura entre 600px e 1024px */
 @media screen and (min-width: 600px) and (max-width: 1024px) {
   #login-container {
     max-width: 80%;
@@ -156,7 +157,6 @@ ion-content {
   }
 }
 
-/* Estilos para telas maiores que 1024px (desktops) */
 @media screen and (min-width: 1024px) {
   #login-container {
     max-width: 50%;
@@ -180,3 +180,4 @@ ion-content {
     }
   }
 }
+
