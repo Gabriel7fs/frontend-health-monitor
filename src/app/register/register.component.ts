@@ -90,7 +90,6 @@ export class RegisterComponent  {
     return input;
   }
 
-
   applyBirthdateMask(event: any) {
     let input = event.target.value.replace(/\D/g, '');
 
