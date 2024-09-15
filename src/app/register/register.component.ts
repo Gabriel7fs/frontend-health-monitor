@@ -72,19 +72,24 @@ export class RegisterComponent  {
     let input = event.target.value.replace(/\D/g, '');
 
     if (input.length > 11) {
-      input = input.substring(0, 11);
+        input = input.substring(0, 11);
     }
 
-    if (input.length > 3 && input.length <= 6) {
-      input = input.replace(/(\d{3})(\d{1,3})/, '$1.$2');
-    } else if (input.length > 6 && input.length <= 9) {
-      input = input.replace(/(\d{3})(\d{3})(\d{1,3})/, '$1.$2.$3');
-    } else if (input.length > 9) {
-      input = input.replace(/(\d{3})(\d{3})(\d{3})(\d{1,2})/, '$1.$2.$3-$4');
-    }
-
-    this.registerForm.get('cpf')?.setValue(input, { emitEvent: false });
+    input = this.formatCPF(input);
+    event.target.value = input;
   }
+
+  formatCPF(input: string): string {
+    if (input.length > 9) {
+        return input.replace(/(\d{3})(\d{3})(\d{3})(\d{1,2})/, '$1.$2.$3-$4');
+    } else if (input.length > 6) {
+        return input.replace(/(\d{3})(\d{3})(\d{1,3})/, '$1.$2.$3');
+    } else if (input.length > 3) {
+        return input.replace(/(\d{3})(\d{1,3})/, '$1.$2');
+    }
+    return input;
+  }
+
 
   applyBirthdateMask(event: any) {
     let input = event.target.value.replace(/\D/g, '');

@@ -31,6 +31,7 @@
           label="Nome completo"
           labelPlacement="floating"
           formControlName="name"
+          maxlength="50"
           errorText="Informe seu nome completo"
         ></ion-input>
       </div>
@@ -62,6 +63,7 @@
           label="Data de nascimento"
           labelPlacement="floating"
           formControlName="birthdate"
+          maxlength="10"
           (keyup)="applyBirthdateMask($event)"
           errorText="Informe sua data de nascimento"
         ></ion-input>
@@ -72,6 +74,7 @@
           label="Contato de emergência"
           labelPlacement="floating"
           formControlName="emergencyContact"
+          maxlength="15"
           (keyup)="applyPhoneMask($event)"
           errorText="Informe um contato de emergência"
         ></ion-input>
