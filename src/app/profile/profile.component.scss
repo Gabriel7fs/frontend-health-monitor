@@ -1,0 +1,145 @@
+ion-content {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  #profile-container {
+    width: 100%;
+    padding: 16px;
+
+    .header {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px
+    }
+
+    .back-button {
+      position: absolute;
+      left: 0;
+      color: #0070f3;
+    }
+
+    h1 {
+      font-size: 28px;
+      color: #0070f3;
+      font-weight: bold;
+      margin: 0;
+    }
+
+    .user-info {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 20px 0;
+
+      .user-icon {
+        font-size: 64px;
+        color: black;
+      }
+
+      h3 {
+        margin-top: 10px;
+        font-size: 20px;
+        font-weight: bold;
+      }
+
+    }
+
+    .menu-options {
+      width: 100%;
+      ion-item {
+        --background: #f7f9fc;
+        --border-color: transparent;
+        --padding-start: 10px;
+        --padding-end: 10px;
+        margin-top: 10px;
+        border-radius: 10px;
+
+        ion-icon {
+          font-size: 24px;
+          color: #007bff;
+        }
+
+        ion-label {
+          font-size: 16px;
+          font-weight: bold;
+        }
+      }
+    }
+  }
+
+  @media screen and (max-width: 600px) {
+
+    #profile-container {
+      padding: 8px;
+      justify-content: flex-start;
+    }
+
+    .header {
+      h1 {
+        font-size: 20px;
+      }
+    }
+
+    .user-info {
+      .user-icon {
+        font-size: 50px;
+      }
+
+      h3 {
+        font-size: 18px;
+      }
+    }
+
+    .menu-options {
+      ion-item {
+        ion-icon {
+          font-size: 20px;
+        }
+
+        ion-label {
+          font-size: 16px;
+        }
+      }
+    }
+  }
+
+  @media screen and (min-width: 601px) and (max-width: 1024px) {
+
+    #profile-container {
+      padding: 12px;
+    }
+
+    .header {
+      h1 {
+        font-size: 22px;
+      }
+    }
+
+    .user-info {
+      .user-icon {
+        font-size: 55px;
+      }
+
+      h3 {
+        font-size: 20px;
+      }
+    }
+
+    .menu-options {
+      ion-item {
+        ion-icon {
+          font-size: 21px;
+        }
+
+        ion-label {
+          font-size: 17px;
+        }
+      }
+    }
+  }
+}
+

@@ -1,0 +1,184 @@
+ion-content {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+
+  #home-container {
+    width: 100%;
+    padding: 16px;
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px;
+
+      .user-info {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+
+        .user-icon {
+          font-size: 40px;
+          color: black;
+        }
+
+        div {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+        }
+
+        span {
+          font-size: 18px;
+          color: #1e90ff;
+        }
+
+        h3 {
+          font-size: 20px;
+          margin: 0;
+          font-weight: bold;
+          color: black;
+        }
+      }
+
+      .settings-icon {
+        font-size: 32px;
+        background-color: #d6e4ff;
+        border-radius: 50%;
+        padding: 10px;
+      }
+    }
+
+    .monitoring {
+      text-align: center;
+      margin-top: 20px;
+
+      h2 {
+        font-size: 18px;
+        font-weight: 600;
+        margin-bottom: 15px;
+      }
+
+      .monitoring-item {
+        margin: 20px 0;
+
+        .monitor-box {
+          background-color: #d6e4ff;
+          border-radius: 20px;
+          padding: 10px;
+          text-align: center;
+
+          p {
+            font-size: 18px;
+            font-weight: 600;
+            margin: 5px;
+            padding-left: 10px;
+            text-align: left;
+            color: #333;
+          }
+
+          h1 {
+            font-size: 36px;
+            margin: 0;
+            color: #000;
+          }
+        }
+      }
+    }
+  }
+
+  @media screen and (max-width: 600px) {
+    #home-container {
+      padding: 8px;
+      justify-content: flex-start;
+    }
+
+    .header {
+      .user-info {
+        .user-icon {
+          font-size: 30px;
+        }
+
+        span {
+          font-size: 16px;
+        }
+
+        h3 {
+          font-size: 18px;
+        }
+      }
+    }
+
+    .monitoring-item {
+      margin: 10px 0;
+
+      .monitor-box {
+        padding: 10px;
+      }
+
+      p {
+        font-size: 16px;
+      }
+
+      h1 {
+        font-size: 28px;
+      }
+    }
+  }
+
+  @media screen and (min-width: 601px) and (max-width: 1024px) {
+    #home-container {
+      padding: 12px;
+    }
+
+    .header {
+      .user-info {
+        .user-icon {
+          font-size: 35px;
+        }
+
+        span {
+          font-size: 17px;
+        }
+
+        h3 {
+          font-size: 19px;
+        }
+      }
+    }
+
+    .monitoring-item {
+      margin: 15px 0;
+
+      .monitor-box {
+        padding: 15px;
+      }
+
+      p {
+        font-size: 17px;
+      }
+
+      h1 {
+        font-size: 32px;
+      }
+    }
+  }
+}
+
+ion-footer {
+  --ion-background-color: #0070f3;
+  ion-tab-bar {
+    background-color: #0070f3;
+
+    ion-tab-button {
+      --color-selected: #000000 !important;
+      --color: #ffffff !important;
+    }
+
+    ion-icon {
+      font-size: 25px;
+    }
+  }
+}
