@@ -3,6 +3,8 @@ import { IonicModule } from '@ionic/angular';
 
 import { ProfileComponent } from './profile.component';
 
+import { provideHttpClientTesting } from '@angular/common/http/testing';
+
 describe('ProfileComponent', () => {
   let component: ProfileComponent;
   let fixture: ComponentFixture<ProfileComponent>;
@@ -10,7 +12,8 @@ describe('ProfileComponent', () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ ProfileComponent ],
-      imports: [IonicModule.forRoot()]
+      imports: [IonicModule.forRoot()],
+      providers: [provideHttpClientTesting()],
     }).compileComponents();
 
     fixture = TestBed.createComponent(ProfileComponent);

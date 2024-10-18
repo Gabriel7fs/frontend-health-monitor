@@ -3,6 +3,8 @@ import { IonicModule } from '@ionic/angular';
 
 import { RegisterComponent } from './register.component';
 
+import { provideHttpClientTesting } from '@angular/common/http/testing';
+
 describe('RegisterComponent', () => {
   let component: RegisterComponent;
   let fixture: ComponentFixture<RegisterComponent>;
@@ -10,7 +12,8 @@ describe('RegisterComponent', () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ RegisterComponent ],
-      imports: [IonicModule.forRoot()]
+      imports: [IonicModule.forRoot()],
+      providers: [provideHttpClientTesting()],
     }).compileComponents();
 
     fixture = TestBed.createComponent(RegisterComponent);
