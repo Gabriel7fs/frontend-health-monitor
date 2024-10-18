@@ -2,8 +2,7 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
 import { NewPasswordComponent } from './new-password.component';
-
-import { provideHttpClientTesting } from '@angular/common/http/testing';
+import { provideHttpClient } from '@angular/common/http';
 
 describe('NewPasswordComponent', () => {
   let component: NewPasswordComponent;
@@ -12,8 +11,8 @@ describe('NewPasswordComponent', () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ NewPasswordComponent ],
-      imports: [IonicModule.forRoot()],
-      providers: [provideHttpClientTesting()],
+      imports: [IonicModule.forRoot() ],
+      providers: [ provideHttpClient() ]
     }).compileComponents();
 
     fixture = TestBed.createComponent(NewPasswordComponent);

@@ -2,8 +2,7 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
 import { ProfileComponent } from './profile.component';
-
-import { provideHttpClientTesting } from '@angular/common/http/testing';
+import { provideHttpClient } from '@angular/common/http';
 
 describe('ProfileComponent', () => {
   let component: ProfileComponent;
@@ -13,7 +12,7 @@ describe('ProfileComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ ProfileComponent ],
       imports: [IonicModule.forRoot()],
-      providers: [provideHttpClientTesting()],
+      providers: [ provideHttpClient() ]
     }).compileComponents();
 
     fixture = TestBed.createComponent(ProfileComponent);
