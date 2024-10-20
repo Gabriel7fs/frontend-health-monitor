@@ -1,27 +1,25 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
-import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
-import { HomeComponent } from './home.component';
 import { SharedModule } from '../shared/shared.module';
+import { ProfileComponent } from './profile.component';
 
 @NgModule({
   imports: [
     CommonModule,
-    FormsModule,
     IonicModule,
     ReactiveFormsModule,
     SharedModule,
     RouterModule.forChild([
         {
             path: '',
-            component: HomeComponent
+            component: ProfileComponent
         }
     ])
 ],
-  declarations: [HomeComponent],
-  exports: [HomeComponent]
+  declarations: [ProfileComponent],
+  exports: [ProfileComponent]
 })
-export class HomeModule {}
+export class ProfileModule {}

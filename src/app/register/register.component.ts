@@ -1,71 +1,83 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { RegisterService } from '../services/register.service';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss'],
 })
-export class RegisterComponent  {
+export class RegisterComponent implements OnInit {
 
   registerForm!: FormGroup;
   showPassword = false;
-  selectedSegment: string = 'paciente';
   isToastOpen = false;
+  errorMessage = '';
+  selectedSegment = 'paciente';
 
-  constructor(private formBuilder: FormBuilder) {
+  private readonly INVALID_CPF_ERROR = "CPF inválido!";
+  private readonly INVALID_ASSOCIATED_CPF_ERROR = "CPF do paciente inválido!";
+  private readonly REGISTRATION_ERROR = "Erro ao registrar o usuário. Tente novamente.";
+  private readonly FORM_ERROR = "Preencha todos os campos obrigatórios.";
+
+  constructor(
+    private formBuilder: FormBuilder,
+    private router: Router,
+    private registerService: RegisterService,
+  ) { }
+
+  ngOnInit() {
     this.createRegisterForm();
   }
 
   createRegisterForm() {
     this.registerForm = this.formBuilder.group({
-      name: [
-        '',
-        Validators.compose([
-          Validators.required,
-        ])
-      ],
-      cpf: [
-        '',
-        Validators.compose([
-          Validators.required,
-          Validators.maxLength(14)
-        ])
-      ],
-      birthdate: [
-        '',
-        Validators.compose([
-          Validators.required,
-        ])
-      ],
-      emergencyContact: [
-        '',
-        Validators.compose([
-          Validators.required,
-        ])
-      ],
-      password: [
-        '',
-        Validators.compose([
-          Validators.required,
-          Validators.minLength(1),
-          Validators.maxLength(30)
-        ])
-      ],
-    })
+      username: ['', Validators.required],
+      cpf: ['', [Validators.required]],
+      birthdate: [''],
+      emergencyContact: [''],
+      cpfAssociated: [''],
+      password: ['', Validators.required],
+      type: [this.selectedSegment]
+    });
+  }
+
+  adjustValidators() {
+    if (this.selectedSegment === 'paciente') {
+      console.log('Paciente selecionado');
+      this.registerForm.get('birthdate')?.setValidators([Validators.required]);
+      this.registerForm.get('emergencyContact')?.setValidators([Validators.required]);
+      this.registerForm.get('cpfAssociated')?.clearValidators();
+      this.registerForm.get('cpfAssociated')?.reset();
+    } else if (this.selectedSegment === 'monitor') {
+      console.log('Monitor selecionado');
+      this.registerForm.get('birthdate')?.clearValidators();
+      this.registerForm.get('emergencyContact')?.clearValidators();
+      this.registerForm.get('cpfAssociated')?.setValidators([Validators.required]);
+      this.registerForm.get('birthdate')?.reset();
+      this.registerForm.get('emergencyContact')?.reset();
+    }
+
+    this.registerForm.updateValueAndValidity();
   }
 
   onSegmentChange(event: any) {
     this.selectedSegment = event.detail.value;
-    this.registerForm.reset();
+    this.adjustValidators();
   }
 
   togglePasswordVisibility() {
     this.showPassword = !this.showPassword;
   }
 
-  setOpen(isOpen: boolean) {
-    this.isToastOpen = isOpen;
+  showErrorToast(message: string) {
+    this.errorMessage = message;
+    this.isToastOpen = true;
+  }
+
+  onToastDismiss() {
+    this.isToastOpen = false;
   }
 
   applyCPFMask(event: any) {
@@ -122,19 +134,72 @@ export class RegisterComponent  {
     this.registerForm.get('emergencyContact')?.setValue(input, { emitEvent: false });
   }
 
-  onRegister() {
-    if (this.registerForm.valid) {
-      let { cpf, password, birthdate, emergencyContact } = this.registerForm.value;
-
-      cpf = cpf.replace(/\./g, '').replace(/-/g, '');
-      birthdate = birthdate.replace(/\//g, '');
-      emergencyContact = emergencyContact.replace(/\D/g, '');
-
-      console.log('Registrando com', cpf, birthdate, emergencyContact, password);
-      // lógica para registro
-    } else {
-      this.isToastOpen = true;
+  validateCPF(cpf: string): boolean {
+    cpf = cpf.replace(/[^\d]+/g, '');
+    if (cpf.length !== 11 || /^(\d)\1{10}$/.test(cpf)) {
+      return false;
     }
+
+    let sum, rest;
+    sum = 0;
+
+    for (let i = 1; i <= 9; i++) {
+      sum += parseInt(cpf.substring(i - 1, i)) * (11 - i);
+    }
+    rest = (sum * 10) % 11;
+    if ((rest === 10) || (rest === 11)) rest = 0;
+    if (rest !== parseInt(cpf.substring(9, 10))) return false;
+
+    sum = 0;
+
+    for (let i = 1; i <= 10; i++) {
+      sum += parseInt(cpf.substring(i - 1, i)) * (12 - i);
+    }
+    rest = (sum * 10) % 11;
+    if ((rest === 10) || (rest === 11)) rest = 0;
+    if (rest !== parseInt(cpf.substring(10, 11))) return false;
+
+    return true;
+  }
+
+
+  onRegister() {
+    if (this.registerForm.invalid) {
+      this.showErrorToast(this.FORM_ERROR);
+      return;
+    }
+
+    const cpf = this.registerForm.get('cpf')?.value;
+    const cpfAssociated = this.selectedSegment === 'monitor' ? this.registerForm.get('cpfAssociated')?.value : null;
+
+    if (!this.validateCPF(cpf)) {
+      this.showErrorToast(this.INVALID_CPF_ERROR);
+      return;
+    }
+
+    if (cpfAssociated && !this.validateCPF(cpfAssociated)) {
+      this.showErrorToast(this.INVALID_ASSOCIATED_CPF_ERROR);
+      return;
+    }
+
+    const formData = { ...this.registerForm.value };
+    formData['type'] = this.selectedSegment === 'paciente' ? 0 : 1;
+
+  if (this.selectedSegment === 'monitor' && cpfAssociated) {
+    formData['cpfAssociated'] = [cpfAssociated];
+  }
+
+    if (this.selectedSegment === 'monitor') {
+      delete formData['birthdate'];
+      delete formData['emergencyContact'];
+    }
+
+    console.log(formData);
+
+    this.registerService.register(formData).subscribe({
+      next: () => this.router.navigate(['/login']),
+      error: () => this.showErrorToast(this.REGISTRATION_ERROR)
+    });
   }
 
 }

@@ -1,23 +1,20 @@
 ion-content {
-  --padding-bottom: 0;
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  height: 100vh;
 
   #login-container {
     width: 100%;
-    padding: 0 16px;
+    padding: 16px;
     text-align: center;
 
-    div:first-child {
+    .header {
       position: relative;
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 100%;
-      padding-top: 24px;
-      padding-bottom: 24px;
+      padding: 10px;
     }
 
     .back-button {
@@ -107,10 +104,9 @@ ion-content {
   }
 }
 
-/* Responsividade para celulares com largura inferior a 600px */
 @media screen and (max-width: 600px) {
   #login-container {
-    padding: 0 8px;
+    padding: 8px;
 
     h1 {
       font-size: 24px;
@@ -131,11 +127,9 @@ ion-content {
   }
 }
 
-/* Responsividade para tablets com largura entre 600px e 1024px */
 @media screen and (min-width: 600px) and (max-width: 1024px) {
   #login-container {
-    max-width: 80%;
-    margin: 0 auto;
+    padding: 12px;
 
     h1 {
       font-size: 26px;
@@ -156,27 +150,3 @@ ion-content {
   }
 }
 
-/* Estilos para telas maiores que 1024px (desktops) */
-@media screen and (min-width: 1024px) {
-  #login-container {
-    max-width: 50%;
-    margin: 0 auto;
-
-    h1 {
-      font-size: 28px;
-    }
-
-    h2 {
-      font-size: 25px;
-    }
-
-    .login-button {
-      font-size: 18px;
-      height: 50px;
-    }
-
-    .forgot-password {
-      font-size: 14px;
-    }
-  }
-}

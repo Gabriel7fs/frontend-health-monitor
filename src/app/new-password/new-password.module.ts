@@ -4,8 +4,7 @@ import { IonicModule } from '@ionic/angular';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
-import { HomeComponent } from './home.component';
-import { SharedModule } from '../shared/shared.module';
+import { NewPasswordComponent } from './new-password.component';
 
 @NgModule({
   imports: [
@@ -13,15 +12,14 @@ import { SharedModule } from '../shared/shared.module';
     FormsModule,
     IonicModule,
     ReactiveFormsModule,
-    SharedModule,
     RouterModule.forChild([
-        {
-            path: '',
-            component: HomeComponent
-        }
+      {
+        path: '',
+        component: NewPasswordComponent
+      }
     ])
-],
-  declarations: [HomeComponent],
-  exports: [HomeComponent]
+  ],
+  declarations: [NewPasswordComponent],
+  exports: [NewPasswordComponent]
 })
-export class HomeModule {}
+export class NewPasswordModule {}

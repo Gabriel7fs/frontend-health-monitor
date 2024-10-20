@@ -1,7 +1,7 @@
 <ion-content [fullscreen]="true">
-  <div id="login-container">
+  <div id="register-container">
     <div class="header">
-      <div class="back">
+      <div class="back-button">
         <ion-back-button defaultHref="/" class="back-button"></ion-back-button>
       </div>
       <div class="toggle">
@@ -30,7 +30,7 @@
         <ion-input fill="outline"
           label="Nome completo"
           labelPlacement="floating"
-          formControlName="name"
+          formControlName="username"
           maxlength="50"
           errorText="Informe seu nome completo"
         ></ion-input>
@@ -51,7 +51,7 @@
         <ion-input fill="outline"
           label="CPF do paciente"
           labelPlacement="floating"
-          formControlName="cpf"
+          formControlName="cpfAssociated"
           maxlength="14"
           (keyup)="applyCPFMask($event)"
           errorText="Informe o CPF do paciente"
@@ -96,17 +96,18 @@
           </ion-button>
         </ion-buttons>
       </div>
-      <ion-button expand="block" class="login-button" type="submit">Registrar</ion-button>
+      <ion-button expand="block" class="register-button" type="submit">Registrar</ion-button>
       <ion-toast [isOpen]="isToastOpen" message="Informe os campos necessários" [duration]="2000"></ion-toast>
     </form>
-    <ion-toast
-      [isOpen]="isToastOpen"
-      message="Informe os campos necessários!"
-      [duration]="2000"
-      (didDismiss)="setOpen(false)">
-    </ion-toast>
     <div class="signup">
       <p>Já possui uma conta? <a href="../login">Login</a></p>
     </div>
   </div>
+  <ion-toast
+    [isOpen]="isToastOpen"
+    [message]="errorMessage"
+    duration="2000"
+    color="danger"
+    (didDismiss)="onToastDismiss()">
+  </ion-toast>
 </ion-content>

@@ -1,21 +1,21 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { LoginComponent } from './login.component';
+import { EditProfileComponent } from './edit-profile.component';
 import { provideHttpClient } from '@angular/common/http';
 
-describe('LoginComponent', () => {
-  let component: LoginComponent;
-  let fixture: ComponentFixture<LoginComponent>;
+describe('EditProfileComponent', () => {
+  let component: EditProfileComponent;
+  let fixture: ComponentFixture<EditProfileComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ LoginComponent ],
+      declarations: [ EditProfileComponent ],
       imports: [IonicModule.forRoot()],
       providers: [ provideHttpClient() ]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(LoginComponent);
+    fixture = TestBed.createComponent(EditProfileComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

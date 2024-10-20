@@ -1,15 +1,14 @@
 <ion-content [fullscreen]="true">
   <div id="login-container">
-    <div>
-      <ion-back-button defaultHref="/" class="back-button"></ion-back-button>
-      <h1>Olá!</h1>
+    <div class="header">
+      <ion-back-button defaultHref="/start-screen" class="back-button"></ion-back-button>
+      <h1>Login</h1>
     </div>
     <div>
       <h2>Seja bem-vindo</h2>
     </div>
 
     <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
-
 
       <div class="input-item">
         <ion-input fill="outline"
@@ -40,7 +39,7 @@
       </div>
 
       <div class="forgot-password">
-        <a>Esqueci minha senha</a>
+        <a (click)="forgotPassword()">Esqueci minha senha</a>
       </div>
 
       <ion-button expand="block" class="login-button" type="submit">Log In</ion-button>
@@ -50,4 +49,12 @@
       <p>Não possui uma conta? <a href="../register">Registre-se</a></p>
     </div>
   </div>
+
+  <ion-toast
+    [isOpen]="isToastOpen"
+    [message]="errorMessage"
+    duration="2000"
+    color="danger"
+    (didDismiss)="onToastDismiss()">
+  </ion-toast>
 </ion-content>
