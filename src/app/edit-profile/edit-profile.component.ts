@@ -33,17 +33,16 @@ export class EditProfileComponent implements OnInit {
       birthDate: [''],
       address: ['']
     });
-
   }
 
   ngOnInit() {
     const userData = JSON.parse(localStorage.getItem('user') || '{}');
     if (userData) {
       this.userId = userData.id;
-      this.username = userData.username || '';
-      this.emergencyContact = userData.emergencyContact || '';
+      this.username = userData.name || '';
+      this.emergencyContact = this.formatPhone(userData.emergencyContact || '');
       this.cpf = userData.cpf || '';
-      this.birthDate = userData.birthDate || '';
+      this.birthDate = this.formatDate(userData.birthDate || '');
       this.address = userData.address || '';
       this.type = userData.type;
 
@@ -71,54 +70,70 @@ export class EditProfileComponent implements OnInit {
   }
 
   applyPhoneMask(event: any) {
-    let input = event.target.value.replace(/\D/g, '');
-
-    if (input.length > 11) {
-      input = input.substring(0, 11);
-    }
-
-    if (input.length <= 10) {
-      input = input.replace(/(\d{2})(\d{4})(\d{0,4})/, '($1) $2-$3');
-    } else {
-      input = input.replace(/(\d{2})(\d{5})(\d{0,4})/, '($1) $2-$3');
-    }
-
+    const input = this.formatPhone(event.target.value);
     this.profileForm.get('emergencyContact')?.setValue(input, { emitEvent: false });
   }
 
-  onUpdateProfile() {
+  formatPhone(phone: any): string {
+    // Converte o valor para string, caso seja um número
+    const phoneString = String(phone);
 
-    let userData = {};
+    let cleaned = phoneString.replace(/\D/g, '');
+
+    if (cleaned.length > 11) {
+      cleaned = cleaned.substring(0, 11);
+    }
+
+    if (cleaned.length <= 10) {
+      return cleaned.replace(/(\d{2})(\d{4})(\d{0,4})/, '($1) $2-$3');
+    } else {
+      return cleaned.replace(/(\d{2})(\d{5})(\d{0,4})/, '($1) $2-$3');
+    }
+  }
+
+  formatDate(date: string): string {
+    if (!date) return '';
+    const [year, month, day] = date.split('-');
+    return `${day}/${month}/${year}`;
+  }
+
+  updateLocalStorage(address: string, emergencyContact: string) {
+    const userData = JSON.parse(localStorage.getItem('user') || '{}');
+    userData.address = address;
+    userData.emergencyContact = emergencyContact;
+    localStorage.setItem('user', JSON.stringify(userData));
+  }
+
+  prepareUserData(address: string, emergencyContact: string | null) {
+    let userData: any = { address };
 
     if (this.type === 'PACIENT') {
-      let emergencyContactValue = this.profileForm.get('emergencyContact')?.value;
-
-      if (emergencyContactValue) {
-        emergencyContactValue = emergencyContactValue.replace(/\D/g, '');
-
-        emergencyContactValue = parseInt(emergencyContactValue, 10);
-      }
-
-      console.log(emergencyContactValue);
-
-      userData = {
-        emergencyContact: emergencyContactValue,
-        address: this.profileForm.get('address')?.value
-      };
-    } else if (this.type === 'MONITOR') {
-      userData = {
-        address: this.profileForm.get('address')?.value
-      };
+      userData.emergencyContact = this.cleanEmergencyContact(emergencyContact);
     }
+
+    return userData;
+  }
+
+  cleanEmergencyContact(contact: string | null): number | null {
+    if (contact) {
+      const cleanedContact = contact.replace(/\D/g, '');
+      return parseInt(cleanedContact, 10);
+    }
+    return null;
+  }
+
+  onUpdateProfile() {
+    const updatedAddress = this.profileForm.get('address')?.value;
+    const updatedEmergencyContact = this.profileForm.get('emergencyContact')?.value;
+
+    this.updateLocalStorage(updatedAddress, updatedEmergencyContact);
+
+    const userData = this.prepareUserData(updatedAddress, updatedEmergencyContact);
 
     this.userService.updateUser(this.userId, userData)
     .subscribe({
-      next: (response) => {
-        this.isToastOpen = true;
-      },
-      error: (err) => {
-        this.showErrorToast('Erro ao atualizar as informações');
-      }
+      next: () => this.isToastOpen = true,
+      error: () => this.showErrorToast('Erro ao atualizar as informações')
     });
   }
 }

@@ -8,7 +8,7 @@ import { catchError, tap } from 'rxjs/operators';
 })
 export class UserService {
 
-  private apiUrl = 'http://localhost:8080/heartbeat/dashboard';
+  private dashboardUrl = 'http://localhost:8080/user/dashboard';
   private updateUserUrl = 'http://localhost:8080/user';
   private updatePasswordUrl = 'http://localhost:8080/user/change-password';
 
@@ -21,7 +21,7 @@ export class UserService {
       'Authorization': `Bearer ${token}`
     });
 
-    return this.http.get<any>(`${this.apiUrl}?userId=${userId}`, { headers });
+    return this.http.get<any>(`${this.dashboardUrl}?userId=${userId}`, { headers });
   }
 
   updateUser(userId: string, userData: any): Observable<any> {
@@ -44,13 +44,7 @@ export class UserService {
   }
 
   updatePassword(passwordData: { cpf: string, password: string, confirmPassword: string }): Observable<any> {
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json'
-    });
-
-    console.log(passwordData);
-
-    return this.http.put<any>(this.updatePasswordUrl, passwordData, { headers })
+    return this.http.put<any>(this.updatePasswordUrl, passwordData)
       .pipe(
         tap(response => {
           console.log('Senha atualizada com sucesso!', response);

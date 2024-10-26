@@ -30,23 +30,21 @@ export class HomeComponent implements OnInit, OnDestroy {
       this.dashboardData = parsedData;
     });
 
-    console.log(this.dashboardData);
-
     const userData = JSON.parse(localStorage.getItem('user') || '{}');
-    this.username = userData.username;
+    this.username = userData.name;
     this.usertype = userData.type;
     this.userId = userData.id;
 
     if (this.usertype === 'MONITOR') {
-      this.userService.getPacientsByMonitorId(this.userId).subscribe(pacients => {
-        if (pacients.length > 0) {
-          this.pacientName = pacients[0].username;
+      this.userService.getPacientsByMonitorId(this.userId).subscribe({
+        next: (patients) => {
+          this.pacientName = patients[0].user.name;
+        },
+        error: (error) => {
+          console.error('Erro ao buscar pacientes', error);
         }
-      }, error => {
-        console.error('Erro ao buscar pacientes', error);
       });
     }
-    console.log(this.pacientName);
   }
 
   ngOnDestroy() {
