@@ -1,0 +1,82 @@
+<ion-content [fullscreen]="true">
+  <div id="profile-edit-container">
+    <div class="header">
+      <ion-back-button defaultHref="/profile" class="back-button"></ion-back-button>
+      <h1>Conta</h1>
+    </div>
+
+    <form [formGroup]="profileForm" (ngSubmit)="onUpdateProfile()">
+
+      <div class="input-item">
+        <ion-input fill="outline"
+          label="Nome De Usuário"
+          labelPlacement="floating"
+          formControlName="userName"
+          [value]="this.username"
+          maxlength="50"
+          readonly="true"
+        ></ion-input>
+      </div>
+
+      <div class="input-item" *ngIf="this.type === 'PACIENT'">
+        <ion-input fill="outline"
+          label="Contato De Emergência"
+          formControlName="emergencyContact"
+          [value]="this.emergencyContact"
+          labelPlacement="floating"
+          maxlength="20"
+          (keyup)="applyPhoneMask($event)"
+        ></ion-input>
+      </div>
+
+      <div class="input-item">
+        <ion-input fill="outline"
+          label="CPF"
+          formControlName="cpf"
+          [value]="this.cpf"
+          labelPlacement="floating"
+          maxlength="14"
+          readonly="true"
+        ></ion-input>
+      </div>
+
+      <div class="input-item" *ngIf="this.type === 'PACIENT'">
+        <ion-input fill="outline"
+          label="Data De Nascimento"
+          formControlName="birthDate"
+          [value]="this.birthDate"
+          labelPlacement="floating"
+          placeholder="DD / MM / AAAA"
+        ></ion-input>
+      </div>
+
+      <div class="input-item">
+        <ion-textarea  fill="outline"
+          label="Endereço"
+          formControlName="address"
+          [value]="this.address"
+          labelPlacement="floating"
+          maxlength="100"
+        ></ion-textarea>
+      </div>
+
+      <ion-button expand="block" class="update-button" type="submit">Atualizar Conta</ion-button>
+    </form>
+  </div>
+
+  <ion-toast
+    [isOpen]="isToastOpen"
+    message="Informações atualizadas com sucesso!"
+    duration="2000"
+    color="success"
+    (didDismiss)="onToastDismiss()">
+  </ion-toast>
+
+  <ion-toast
+    [isOpen]="isErrorToastOpen"
+    [message]="errorMessage"
+    duration="2000"
+    color="danger"
+    (didDismiss)="onErrorToastDismiss()">
+  </ion-toast>
+</ion-content>

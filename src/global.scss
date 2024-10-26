@@ -35,3 +35,40 @@
 /* @import "@ionic/angular/css/palettes/dark.always.css"; */
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
 /* @import "@ionic/angular/css/palettes/dark.system.css"; */
+
+ion-action-sheet.my-custom-class .action-sheet-group {
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.my-custom-class {
+  --color: #007bff !important;
+}
+
+ion-action-sheet-button {
+  font-weight: bold;
+  font-size: 18px;
+}
+
+ion-action-sheet.my-custom-class .action-sheet-title {
+  color: #0056ff;
+  text-align: center;
+}
+
+ion-action-sheet.my-custom-class .action-sheet-button,
+ion-action-sheet.my-custom-class .action-sheet-button.ion-focused {
+  color: #000000;
+}
+
+@media (any-hover: hover) {
+  ion-action-sheet.my-custom-class .action-sheet-button:hover {
+    color: #0056ff;
+  }
+}
+
+ion-action-sheet.my-custom-class ion-backdrop {
+  background-color: #007bff;
+  opacity: 1;
+}

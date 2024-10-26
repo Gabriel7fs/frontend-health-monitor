@@ -1,0 +1,43 @@
+<ion-content [fullscreen]="true">
+  <div id="home-container">
+    <div class="header">
+      <div class="user-info">
+        <ion-icon name="person-circle-outline" class="user-icon"></ion-icon>
+        <div>
+          <span>Bem-Vindo</span>
+          <h3>{{ username }}</h3>
+        </div>
+      </div>
+    </div>
+
+    <div class="monitoring">
+
+      <div *ngIf="this.usertype === 'PACIENT'">
+        <h2>Monitorando sua frequência cardiaca</h2>
+      </div>
+
+      <div *ngIf="this.usertype === 'MONITOR'">
+        <h2>Monitorando {{ pacientName }}</h2>
+      </div>
+
+      <div class="monitoring-item">
+        <div class="monitor-box">
+          <p>BPM</p>
+          <!-- <h1>{{ bpmValue || '00.0' }}</h1> -->
+          <h1>00.0</h1>
+        </div>
+      </div>
+
+      <div class="monitoring-item">
+        <div class="monitor-box">
+          <p>SpO2</p>
+          <!-- <h1>{{ spo2Value || '00.0' }}</h1> -->
+          <h1>00.0</h1>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>
+
+<app-footer></app-footer>
+

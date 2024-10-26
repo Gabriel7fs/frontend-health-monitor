@@ -3,21 +3,23 @@ import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { StartScreenComponent } from './start-screen.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { NewPasswordComponent } from './new-password.component';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
+    ReactiveFormsModule,
     RouterModule.forChild([
       {
         path: '',
-        component: StartScreenComponent
+        component: NewPasswordComponent
       }
     ])
   ],
-  declarations: [StartScreenComponent],
-  exports: [StartScreenComponent]
+  declarations: [NewPasswordComponent],
+  exports: [NewPasswordComponent]
 })
-export class StartScreenModule {}
+export class NewPasswordModule {}

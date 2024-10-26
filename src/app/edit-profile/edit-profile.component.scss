@@ -1,0 +1,90 @@
+
+ion-content {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  #profile-edit-container {
+    width: 100%;
+    padding: 16px;
+
+    .header {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px
+    }
+
+    .back-button {
+      position: absolute;
+      left: 0;
+      color: #0070f3;
+    }
+
+    h1 {
+      font-size: 28px;
+      color: #0070f3;
+      font-weight: bold;
+      margin: 0;
+    }
+
+    form {
+      padding: 16px;
+    }
+
+    .input-item {
+      width: 100%;
+      position: relative;
+      margin-bottom: 1.5rem;
+    }
+
+    .update-button {
+      --border-radius: 25px;
+      font-size: 18px;
+      text-transform: none;
+      width: 100%;
+      height: 50px;
+      --box-shadow: 0 4px 8px rgba(0, 112, 243, 0.5);
+    }
+
+    @media screen and (max-width: 600px) {
+      #profile-edit-container {
+        padding: 10px;
+
+        h1 {
+          font-size: 1.5rem;
+        }
+
+        .input-item {
+          margin-bottom: 1rem;
+        }
+
+        .update-button {
+          font-size: 16px;
+          height: 45px;
+        }
+      }
+    }
+
+    @media screen and (min-width: 601px) and (max-width: 1024px) {
+      #profile-edit-container {
+        padding: 12px;
+
+        h1 {
+          font-size: 1.75rem;
+        }
+
+        .input-item {
+          margin-bottom: 1.2rem;
+        }
+
+        .update-button {
+          font-size: 17px;
+          height: 48px;
+        }
+      }
+    }
+  }
+}
