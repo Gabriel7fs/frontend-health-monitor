@@ -11,7 +11,7 @@ export class StartScreenComponent {
   public logoApp = '../../assets/img/logo.png';
 
   constructor(
-    private router: Router
+    readonly router: Router
   ) { }
 
   onClickLogin(): void {
