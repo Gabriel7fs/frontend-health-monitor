@@ -37,7 +37,7 @@ export class RegisterComponent implements OnInit {
       cpf: ['', [Validators.required]],
       birthdate: [''],
       emergencyContact: [''],
-      cpfAssociated: [''],
+      cpfAssociateds: [''],
       password: ['', Validators.required],
       type: [this.selectedSegment]
     });
@@ -45,16 +45,14 @@ export class RegisterComponent implements OnInit {
 
   adjustValidators() {
     if (this.selectedSegment === 'paciente') {
-      console.log('Paciente selecionado');
       this.registerForm.get('birthdate')?.setValidators([Validators.required]);
       this.registerForm.get('emergencyContact')?.setValidators([Validators.required]);
-      this.registerForm.get('cpfAssociated')?.clearValidators();
-      this.registerForm.get('cpfAssociated')?.reset();
+      this.registerForm.get('cpfAssociateds')?.clearValidators();
+      this.registerForm.get('cpfAssociateds')?.reset();
     } else if (this.selectedSegment === 'monitor') {
-      console.log('Monitor selecionado');
       this.registerForm.get('birthdate')?.clearValidators();
       this.registerForm.get('emergencyContact')?.clearValidators();
-      this.registerForm.get('cpfAssociated')?.setValidators([Validators.required]);
+      this.registerForm.get('cpfAssociateds')?.setValidators([Validators.required]);
       this.registerForm.get('birthdate')?.reset();
       this.registerForm.get('emergencyContact')?.reset();
     }
@@ -170,14 +168,14 @@ export class RegisterComponent implements OnInit {
     }
 
     const cpf = this.registerForm.get('cpf')?.value;
-    const cpfAssociated = this.selectedSegment === 'monitor' ? this.registerForm.get('cpfAssociated')?.value : null;
+    const cpfAssociateds = this.selectedSegment === 'monitor' ? this.registerForm.get('cpfAssociateds')?.value : null;
 
     if (!this.validateCPF(cpf)) {
       this.showErrorToast(this.INVALID_CPF_ERROR);
       return;
     }
 
-    if (cpfAssociated && !this.validateCPF(cpfAssociated)) {
+    if (cpfAssociateds && !this.validateCPF(cpfAssociateds)) {
       this.showErrorToast(this.INVALID_ASSOCIATED_CPF_ERROR);
       return;
     }
@@ -185,16 +183,16 @@ export class RegisterComponent implements OnInit {
     const formData = { ...this.registerForm.value };
     formData['type'] = this.selectedSegment === 'paciente' ? 0 : 1;
 
-  if (this.selectedSegment === 'monitor' && cpfAssociated) {
-    formData['cpfAssociated'] = [cpfAssociated];
-  }
+    if (this.selectedSegment === 'monitor' && cpfAssociateds) {
+      formData['cpfAssociateds'] = [cpfAssociateds];
+    }
 
     if (this.selectedSegment === 'monitor') {
       delete formData['birthdate'];
       delete formData['emergencyContact'];
+    } else if (this.selectedSegment === 'paciente') {
+      delete formData['cpfAssociateds'];
     }
-
-    console.log(formData);
 
     this.registerService.register(formData).subscribe({
       next: () => this.router.navigate(['/login']),

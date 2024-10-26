@@ -20,13 +20,10 @@ export class RegisterService {
       })
     };
 
-    console.log(userData.type);
-
     if (userData.type === 0) {
-      userData.birthdate = userData.birthdate ? userData.birthdate.replaceAll('/', '-') : null;
+      userData.birthdate = userData.birthdate.replaceAll('/', '-');
 
-      userData.emergencyContact = userData.emergencyContact ? userData.emergencyContact.replace(/[^\\d]/g, '') : null;
-      console.log(userData.emergencyContact);
+      userData.emergencyContact = userData.emergencyContact.replace(/[^\d]/g, '');
     }
 
     return this.http.post<any>(this.apiUrl, userData, httpOptions)

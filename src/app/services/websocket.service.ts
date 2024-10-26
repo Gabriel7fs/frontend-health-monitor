@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Client, Message, Stomp } from '@stomp/stompjs';
+import { Message, Stomp } from '@stomp/stompjs';
 import * as SockJS from 'sockjs-client';
 import { Subject } from 'rxjs';
 
