@@ -16,7 +16,7 @@
           labelPlacement="floating"
           formControlName="cpf"
           maxlength="14"
-          (keyup)="applyCPFMask($event)"
+          (ionChange)="applyCPFMask($event)"
           errorText="Necessário informar o CPF"
         ></ion-input>
       </div>

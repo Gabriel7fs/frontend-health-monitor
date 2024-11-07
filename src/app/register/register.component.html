@@ -42,7 +42,7 @@
           labelPlacement="floating"
           formControlName="cpf"
           maxlength="14"
-          (keyup)="applyCPFMask($event)"
+          (ionChange)="applyCPFMask($event)"
           errorText="Informe seu o CPF"
         ></ion-input>
       </div>
@@ -53,7 +53,7 @@
           labelPlacement="floating"
           formControlName="cpfAssociateds"
           maxlength="14"
-          (keyup)="applyCPFMask($event)"
+          (ionChange)="applyCPFMask($event)"
           errorText="Informe o CPF do paciente"
         ></ion-input>
       </div>
@@ -64,7 +64,7 @@
           labelPlacement="floating"
           formControlName="birthdate"
           maxlength="10"
-          (keyup)="applyBirthdateMask($event)"
+          (ionChange)="applyBirthdateMask($event)"
           errorText="Informe sua data de nascimento"
         ></ion-input>
       </div>
@@ -75,7 +75,7 @@
           labelPlacement="floating"
           formControlName="emergencyContact"
           maxlength="15"
-          (keyup)="applyPhoneMask($event)"
+          (ionChange)="applyPhoneMask($event)"
           errorText="Informe um contato de emergência"
         ></ion-input>
       </div>
