@@ -25,7 +25,7 @@
           [value]="this.emergencyContact"
           labelPlacement="floating"
           maxlength="20"
-          (keyup)="applyPhoneMask($event)"
+          (ionChange)="applyPhoneMask($event)"
         ></ion-input>
       </div>
 
@@ -47,6 +47,7 @@
           [value]="this.birthDate"
           labelPlacement="floating"
           placeholder="DD / MM / AAAA"
+          readonly="true"
         ></ion-input>
       </div>
 
