@@ -112,7 +112,10 @@
               }
             ],
             "styles": ["src/global.scss", "src/theme/variables.scss"],
-            "scripts": []
+            "scripts": [],
+            "codeCoverageExclude": [
+              "src/app/services/**"
+            ]
           },
           "configurations": {
             "ci": {
