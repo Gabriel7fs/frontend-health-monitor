@@ -3,7 +3,6 @@ import { IonicModule } from '@ionic/angular';
 
 import { EditProfileComponent } from './edit-profile.component';
 import { provideHttpClient } from '@angular/common/http';
-import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { UserService } from '../services/user.service';
 import { of, throwError } from 'rxjs';
 

@@ -1,11 +1,10 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { IonicModule, ActionSheetController, NavController, ActionSheetButton } from '@ionic/angular';
+import { IonicModule, ActionSheetController, NavController } from '@ionic/angular';
 
 import { ProfileComponent } from './profile.component';
 import { provideHttpClient } from '@angular/common/http';
 import { LoginService } from '../services/login.service';
 import { Router } from '@angular/router';
-import { of } from 'rxjs';
 
 describe('ProfileComponent', () => {
   let component: ProfileComponent;

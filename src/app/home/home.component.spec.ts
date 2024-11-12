@@ -3,7 +3,7 @@ import { IonicModule } from '@ionic/angular';
 
 import { HomeComponent } from './home.component';
 import { provideHttpClient } from '@angular/common/http';
-import { of, throwError, Subscription } from 'rxjs';
+import { of, throwError } from 'rxjs';
 import { WebsocketService } from '../services/websocket.service';
 import { UserService } from '../services/user.service';
 

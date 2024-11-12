@@ -1,9 +1,8 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { IonicModule, ToastController } from '@ionic/angular';
+import { IonicModule } from '@ionic/angular';
 
 import { NewPasswordComponent } from './new-password.component';
 import { provideHttpClient } from '@angular/common/http';
-import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { UserService } from '../services/user.service';
 import { of, throwError } from 'rxjs';
 

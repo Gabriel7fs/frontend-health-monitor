@@ -3,7 +3,6 @@ import { IonicModule, NavController } from '@ionic/angular';
 
 import { LoginComponent } from './login.component';
 import { provideHttpClient } from '@angular/common/http';
-import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { LoginService } from '../services/login.service';
 import { of, throwError } from 'rxjs';
