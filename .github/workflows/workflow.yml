@@ -5,11 +5,11 @@ name: Workflow CI
 
 on:
   push:
-    branches: 
+    branches:
       - "main"
       - "develop"
   pull_request:
-    branches: 
+    branches:
       - "main"
       - "develop"
 
@@ -33,6 +33,7 @@ jobs:
     strategy:
       matrix:
         node-version: [20.x]
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
 
