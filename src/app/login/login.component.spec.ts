@@ -14,6 +14,8 @@ describe('LoginComponent', () => {
   let navCtrlSpy: jasmine.SpyObj<NavController>;
   let loginServiceSpy: jasmine.SpyObj<LoginService>;
 
+  const MOCK_PASSWORD = 'test1234';
+
   beforeEach(waitForAsync(() => {
 
     routerSpy = jasmine.createSpyObj('Router', ['navigate']);
@@ -66,17 +68,17 @@ describe('LoginComponent', () => {
   });
 
   it('should call login service and navigate to /home on successful login', () => {
-    component.loginForm.setValue({ cpf: '12345678901', password: 'password' });
+    component.loginForm.setValue({ cpf: '12345678901', password: MOCK_PASSWORD });
     loginServiceSpy.login.and.returnValue(of({ success: true }));
 
     component.onLogin();
 
-    expect(loginServiceSpy.login).toHaveBeenCalledWith({ cpf: '12345678901', password: 'password' });
+    expect(loginServiceSpy.login).toHaveBeenCalledWith({ cpf: '12345678901', password: MOCK_PASSWORD });
     expect(navCtrlSpy.navigateRoot).toHaveBeenCalledWith('/home');
   });
 
   it('should show error toast on login failure', () => {
-    component.loginForm.setValue({ cpf: '12345678901', password: 'password' });
+    component.loginForm.setValue({ cpf: '12345678901', password: MOCK_PASSWORD });
     loginServiceSpy.login.and.returnValue(throwError(() => new Error('Invalid credentials')));
     spyOn(component, 'showErrorToast');
 

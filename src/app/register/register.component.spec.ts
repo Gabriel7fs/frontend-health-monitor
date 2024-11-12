@@ -14,6 +14,8 @@ describe('RegisterComponent', () => {
   let registerServiceSpy: jasmine.SpyObj<RegisterService>;
   let navCtrlSpy: jasmine.SpyObj<NavController>;
 
+  const MOCK_PASSWORD = 'test1234';
+
   beforeEach(waitForAsync(() => {
     routerSpy = jasmine.createSpyObj('Router', ['navigate']);
     registerServiceSpy = jasmine.createSpyObj('RegisterService', ['register']);
@@ -70,12 +72,12 @@ describe('RegisterComponent', () => {
   it('should show error toast when CPF is invalid', () => {
     spyOn(component, 'showErrorToast');
     component.registerForm.setValue({
-      username: 'John Doe',
+      username: 'Paciente teste',
       cpf: '11111111111',
       birthdate: '01/01/1990',
       emergencyContact: '(12) 3456-7890',
       cpfAssociateds: '',
-      password: 'password',
+      password: MOCK_PASSWORD,
       type: 'paciente'
     });
     component.onRegister();
@@ -84,12 +86,12 @@ describe('RegisterComponent', () => {
 
   it('should call register service and navigate to /login on successful registration', () => {
     component.registerForm.setValue({
-      username: 'John Doe',
+      username: 'Paciente teste',
       cpf: '123.456.789-09',
       birthdate: '01/01/1990',
       emergencyContact: '(12) 3456-7890',
       cpfAssociateds: '',
-      password: 'password',
+      password: MOCK_PASSWORD,
       type: 'paciente'
     });
     spyOn(component, 'validateCPF').and.returnValue(true);
@@ -97,7 +99,7 @@ describe('RegisterComponent', () => {
 
     component.onRegister();
 
-    expect(registerServiceSpy.register).toHaveBeenCalledWith(jasmine.objectContaining({ username: 'John Doe' }));
+    expect(registerServiceSpy.register).toHaveBeenCalledWith(jasmine.objectContaining({ username: 'Paciente teste' }));
     expect(routerSpy.navigate).toHaveBeenCalledWith(['/login']);
   });
 
@@ -105,12 +107,12 @@ describe('RegisterComponent', () => {
     spyOn(component, 'showErrorToast');
 
     component.registerForm.setValue({
-      username: 'John Doe',
+      username: 'Paciente teste',
       cpf: '123.456.789-09',
       birthdate: '01/01/1990',
       emergencyContact: '(12) 3456-7890',
       cpfAssociateds: '',
-      password: 'password',
+      password: MOCK_PASSWORD,
       type: 'paciente'
     });
     spyOn(component, 'validateCPF').and.returnValue(true);
