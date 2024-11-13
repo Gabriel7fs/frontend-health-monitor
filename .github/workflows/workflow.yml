@@ -55,7 +55,7 @@ jobs:
         run: npm run build --if-present
 
       - name: Run tests
-        run: npm run test -- --coverage
+        run: npm run test --coverage
 
   sonarcloud:
     name: SonarQube Cloud Analysis
