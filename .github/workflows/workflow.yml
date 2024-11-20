@@ -2,11 +2,11 @@ name: Workflow CI
 
 on:
   push:
-    branches: 
+    branches:
       - "main"
       - "develop"
   pull_request:
-    branches: 
+    branches:
       - "main"
       - "develop"
 
@@ -53,3 +53,8 @@ jobs:
 
       - name: Run tests
         run: npm run test
+
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
+        env:
+          SONAR_TOKEN: ${{ secrets.SONARCLOUD_TOKEN }}
