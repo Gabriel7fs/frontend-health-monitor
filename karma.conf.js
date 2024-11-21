@@ -25,12 +25,14 @@ module.exports = function (config) {
       suppressAll: true // removes the duplicated traces
     },
     coverageReporter: {
-      dir: require('path').join(__dirname, './coverage/app'),
+      dir: require('path').join(__dirname, './coverage'),
       subdir: '.',
       reporters: [
         { type: 'html' },
-        { type: 'text-summary' }
-      ]
+        { type: 'text-summary' },
+        { type: 'lcov' } // LCOV report for SonarCloud
+      ],
+      exclude: ['src/app/services/**']
     },
     reporters: ['progress', 'kjhtml'],
     port: 9876,
