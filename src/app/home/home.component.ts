@@ -10,7 +10,7 @@ import { UserService } from '../services/user.service';
 })
 export class HomeComponent implements OnInit, OnDestroy {
   public dashboardData: any[] = [];
-  private messageSubscription!: Subscription;
+  public messageSubscription!: Subscription;
 
   username: any;
   userId: any;
