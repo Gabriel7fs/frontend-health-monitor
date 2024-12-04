@@ -72,3 +72,16 @@ ion-action-sheet.my-custom-class ion-backdrop {
   background-color: #007bff;
   opacity: 1;
 }
+
+ion-modal .bluetooth-title {
+  font-size: 20px;
+  color: #0070f3;
+  font-weight: bold;
+  text-align: center;
+  margin: 0;
+}
+
+ion-modal .cancel-button {
+  color: red;
+  font-weight: bold;
+}
