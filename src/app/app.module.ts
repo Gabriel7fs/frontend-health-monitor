@@ -9,6 +9,8 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { provideHttpClient } from '@angular/common/http';
 
+import { BluetoothSerial } from '@ionic-native/bluetooth-serial/ngx';
+
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -17,7 +19,7 @@ import { provideHttpClient } from '@angular/common/http';
     AppRoutingModule,
     ReactiveFormsModule
   ],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, provideHttpClient()],
+  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, provideHttpClient(), BluetoothSerial],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

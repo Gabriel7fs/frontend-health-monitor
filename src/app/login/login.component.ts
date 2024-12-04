@@ -44,11 +44,11 @@ export class LoginComponent implements OnInit {
 
   formatCPF(input: string): string {
     if (input.length > 9) {
-        return input.replace(/(\d{3})(\d{3})(\d{3})(\d{1,2})/, '$1.$2.$3-$4');
+      return input.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
     } else if (input.length > 6) {
-        return input.replace(/(\d{3})(\d{3})(\d{1,3})/, '$1.$2.$3');
+      return input.replace(/(\d{3})(\d{3})(\d{1,3})/, '$1.$2.$3');
     } else if (input.length > 3) {
-        return input.replace(/(\d{3})(\d{1,3})/, '$1.$2');
+      return input.replace(/(\d{3})(\d{1,3})/, '$1.$2');
     }
     return input;
   }

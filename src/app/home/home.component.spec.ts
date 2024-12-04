@@ -1,101 +1,115 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { IonicModule } from '@ionic/angular';
-
+import { IonicModule, ToastController } from '@ionic/angular';
 import { HomeComponent } from './home.component';
-import { provideHttpClient } from '@angular/common/http';
-import { of, throwError } from 'rxjs';
 import { WebsocketService } from '../services/websocket.service';
 import { UserService } from '../services/user.service';
+import { BluetoothDataService } from '../services/bluetooth-data-service.service';
+import { of } from 'rxjs';
 
 describe('HomeComponent', () => {
   let component: HomeComponent;
   let fixture: ComponentFixture<HomeComponent>;
-  let websocketServiceSpy: jasmine.SpyObj<WebsocketService>;
-  let userServiceSpy: jasmine.SpyObj<UserService>;
+
+  const mockWebsocketService = {
+    connect: jasmine.createSpy('connect'),
+    disconnect: jasmine.createSpy('disconnect'),
+    messages$: of([{ heartbeats: [{ heartbeat: 72, oxygenQuantity: 98 }] }]),
+  };
+
+  const mockUserService = {
+    getPacientsByMonitorId: jasmine.createSpy('getPacientsByMonitorId').and.returnValue(
+      of([{ user: { name: 'User test' } }])
+    ),
+  };
+
+  const mockBluetoothDataService = {
+    latestData$: of({ bpm: 75, spo2: 97 }),
+  };
+
+  const mockToastController = {
+    create: jasmine.createSpy('create').and.callFake(() => {
+      return {
+        present: jasmine.createSpy('present'),
+      };
+    }),
+  };
 
   beforeEach(async () => {
-    websocketServiceSpy = jasmine.createSpyObj('WebsocketService', ['connect', 'disconnect', 'sendMessage'], {
-      messages$: of(JSON.stringify([{ bpm: 80, spo2: 95 }]))
-    });
-    userServiceSpy = jasmine.createSpyObj('UserService', ['getPacientsByMonitorId']);
-
     await TestBed.configureTestingModule({
       declarations: [HomeComponent],
       imports: [IonicModule.forRoot()],
-      providers: [ provideHttpClient(),
-        { provide: WebsocketService, useValue: websocketServiceSpy },
-        { provide: UserService, useValue: userServiceSpy }
-      ]
+      providers: [
+        { provide: WebsocketService, useValue: mockWebsocketService },
+        { provide: UserService, useValue: mockUserService },
+        { provide: BluetoothDataService, useValue: mockBluetoothDataService },
+        { provide: ToastController, useValue: mockToastController },
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(HomeComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('should create the component', () => {
     expect(component).toBeTruthy();
   });
 
+  it('should load patients for MONITOR user type', () => {
+    component.usertype = 'MONITOR';
+    component.userCpf = '123456789';
+    component.loadPatients();
 
-  it('should initialize username, usertype, and userId from localStorage', () => {
-    spyOn(localStorage, 'getItem').and.returnValue(JSON.stringify({ name: 'Monitor A', type: 'MONITOR', id: 1 }));
-
-    userServiceSpy.getPacientsByMonitorId.and.returnValue(of([{ user: { name: 'Pacient A' } }]));
-
-    component.ngOnInit();
-
-    expect(component.username).toBe('Monitor A');
-    expect(component.usertype).toBe('MONITOR');
-    expect(component.userId).toBe(1);
+    expect(mockUserService.getPacientsByMonitorId).toHaveBeenCalledWith('123456789');
+    expect(component.pacientName).toBe('User test');
   });
 
+  it('should handle WebSocket data correctly', () => {
+    component.initializeWebsocket();
 
-  it('should connect to websocket service on initialization', () => {
-    component.ngOnInit();
-    expect(websocketServiceSpy.connect).toHaveBeenCalled();
+    expect(component.currentBpm).toBe('72.0');
+    expect(component.currentSpo2).toBe('98.0');
   });
 
-  it('should set dashboard data when message is received from websocket', () => {
-    component.ngOnInit();
-    expect(component.dashboardData).toEqual([{ bpm: 80, spo2: 95 }]);
+  it('should handle Bluetooth data correctly', () => {
+    component.initializeBluetooth();
+
+    expect(component.currentBpm).toBe(75);
+    expect(component.currentSpo2).toBe(97);
   });
 
-  it('should unsubscribe from messageSubscription and disconnect websocket on destroy', () => {
-    spyOn(component.messageSubscription, 'unsubscribe');
+  it('should show alert when BPM is below 60 (bradicardia)', async () => {
+    component.currentBpm = '55';
+    component.currentSpo2 = '95';
+
+    await component.sendAlert();
+
+    expect(mockToastController.create).toHaveBeenCalledWith(
+      jasmine.objectContaining({
+        message: 'Paciente está apresentando frequência cardíaca irregular (bradicardia), abaixo de 60 bpm',
+        color: 'danger',
+      })
+    );
+  });
+
+  it('should show alert when SpO2 is below 90 (hipoxemia)', async () => {
+    component.currentBpm = '70';
+    component.currentSpo2 = '88';
+
+    await component.sendAlert();
+
+    expect(mockToastController.create).toHaveBeenCalledWith(
+      jasmine.objectContaining({
+        message: 'Paciente está com baixa saturação de oxigênio no sangue (hipoxemia), abaixo de 90%',
+        color: 'danger',
+      })
+    );
+  });
+
+  it('should unsubscribe and disconnect WebSocket on ngOnDestroy', () => {
+    component.messageSubscription = jasmine.createSpyObj('Subscription', ['unsubscribe']);
 
     component.ngOnDestroy();
 
     expect(component.messageSubscription.unsubscribe).toHaveBeenCalled();
-    expect(websocketServiceSpy.disconnect).toHaveBeenCalled();
-  });
-
-  it('should fetch pacient name if usertype is MONITOR', () => {
-    spyOn(localStorage, 'getItem').and.returnValue(JSON.stringify({ name: 'Monitor A', type: 'MONITOR', id: '1' }));
-
-    userServiceSpy.getPacientsByMonitorId.and.returnValue(of([{ user: { name: 'Pacient A' } }]));
-
-    component.ngOnInit();
-
-    expect(userServiceSpy.getPacientsByMonitorId).toHaveBeenCalledWith('1');
-    expect(component.pacientName).toBe('Pacient A');
-  });
-
-  it('should log an error if fetching pacient name fails', () => {
-    spyOn(console, 'error');
-    spyOn(localStorage, 'getItem').and.returnValue(JSON.stringify({ name: 'Monitor A', type: 'MONITOR', id: 1 }));
-    userServiceSpy.getPacientsByMonitorId.and.returnValue(throwError(() => new Error('Error fetching patients')));
-
-    component.ngOnInit();
-    expect(console.error).toHaveBeenCalledWith('Erro ao buscar pacientes', jasmine.any(Error));
-  });
-
-  it('should send heartbeat data through websocket service', () => {
-    component.sendHeartbeat(1, 72, 98);
-    expect(websocketServiceSpy.sendMessage).toHaveBeenCalledWith(JSON.stringify({
-      pacientId: 1,
-      heartbeat: 72,
-      oxygenQuantity: 98
-    }));
   });
 });

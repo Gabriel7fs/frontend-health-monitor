@@ -14,17 +14,17 @@ export class WebsocketService {
 
   constructor() {}
 
-  connect() {
-    const socket = new SockJS('http://localhost:8080/ws');
+  connect(id: any) {
+    const socket = new SockJS('http://localhost:8080/api/ws');
+    // const socket = new SockJS('https://thehealthmonitor.cloud/api/ws');
     this.stompClient = Stomp.over(socket);
 
     this.stompClient.connect({}, (frame: any) => {
-      console.log('Connected: ' + frame);
 
-      this.stompClient?.subscribe('/topic/messages', (message: Message) => {
+      this.stompClient?.subscribe('/topic/messages/' + id, (message: Message) => {
         if (message.body) {
-          console.log(JSON.parse(message.body));
-          this.messageSubject.next(message.body);
+          const parsedData = JSON.parse(message.body);
+          this.messageSubject.next(parsedData);
         }
       });
     }, (error: any) => {

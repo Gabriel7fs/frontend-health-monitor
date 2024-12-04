@@ -10,32 +10,56 @@
       </div>
     </div>
 
-    <div class="monitoring">
+    <ng-container *ngIf="isConnected === true || this.usertype === 'MONITOR'; else bluetoothTemplate">
+      <ion-card color="light">
+        <ion-card-header>
+          <div *ngIf="this.usertype === 'PACIENT'">
+            <ion-card-title>Monitorando sua frequência cardiaca</ion-card-title>
+          </div>
+          <div *ngIf="this.usertype === 'MONITOR'">
+            <ion-card-title>Monitorando {{ pacientName }}</ion-card-title>
+          </div>
+        </ion-card-header>
 
-      <div *ngIf="this.usertype === 'PACIENT'">
-        <h2>Monitorando sua frequência cardiaca</h2>
-      </div>
+        <ion-card-content>
+          <div class="monitoring-item">
+            <div class="monitor-box">
+              <p>BPM</p>
+              <h1>{{ currentBpm || '00.0' }}</h1>
+            </div>
+          </div>
+          <div class="monitoring-item">
+            <div class="monitor-box">
+              <p>SpO2</p>
+              <h1>{{ currentSpo2 || '00.0' }}</h1>
+            </div>
+          </div>
+        </ion-card-content>
+      </ion-card>
+    </ng-container>
 
-      <div *ngIf="this.usertype === 'MONITOR'">
-        <h2>Monitorando {{ pacientName }}</h2>
-      </div>
+    <ng-template #bluetoothTemplate>
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>Dados Capturados por Bluetooth</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <div class="monitoring-item">
+            <div class="monitor-box">
+              <p>Bluetooth BPM</p>
+              <h1>{{ currentBpm || '00.0' }}</h1>
+            </div>
+          </div>
+          <div class="monitoring-item">
+            <div class="monitor-box">
+              <p>Bluetooth SpO2</p>
+              <h1>{{ currentSpo2 || '00.0' }}</h1>
+            </div>
+          </div>
+        </ion-card-content>
+      </ion-card>
+    </ng-template>
 
-      <div class="monitoring-item">
-        <div class="monitor-box">
-          <p>BPM</p>
-          <!-- <h1>{{ bpmValue || '00.0' }}</h1> -->
-          <h1>00.0</h1>
-        </div>
-      </div>
-
-      <div class="monitoring-item">
-        <div class="monitor-box">
-          <p>SpO2</p>
-          <!-- <h1>{{ spo2Value || '00.0' }}</h1> -->
-          <h1>00.0</h1>
-        </div>
-      </div>
-    </div>
   </div>
 </ion-content>
 
