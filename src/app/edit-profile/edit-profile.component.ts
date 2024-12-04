@@ -41,7 +41,7 @@ export class EditProfileComponent implements OnInit {
       this.userId = userData.id;
       this.username = userData.name || '';
       this.emergencyContact = this.formatPhone(userData.emergencyContact || '');
-      this.cpf = userData.cpf || '';
+      this.cpf = this.formatCpf(userData.cpf || '');
       this.birthDate = this.formatDate(userData.birthDate || '');
       this.address = userData.address || '';
       this.type = userData.type;
@@ -75,7 +75,6 @@ export class EditProfileComponent implements OnInit {
   }
 
   formatPhone(phone: any): string {
-    // Converte o valor para string, caso seja um número
     const phoneString = String(phone);
 
     let cleaned = phoneString.replace(/\D/g, '');
@@ -95,6 +94,17 @@ export class EditProfileComponent implements OnInit {
     if (!date) return '';
     const [year, month, day] = date.split('-');
     return `${day}/${month}/${year}`;
+  }
+
+  formatCpf(cpf: any): string {
+    const cpfString = String(cpf);
+    let cleaned = cpfString.replace(/\D/g, '');
+
+    if (cleaned.length > 11) {
+      cleaned = cleaned.substring(0, 11);
+    }
+
+    return cleaned.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
   }
 
   updateLocalStorage(address: string, emergencyContact: string) {

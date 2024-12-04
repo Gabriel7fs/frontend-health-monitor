@@ -72,7 +72,6 @@ describe('NewPasswordComponent', () => {
     expect(userServiceSpy.updatePassword).toHaveBeenCalledWith({
       cpf: '123.456.789-01',
       password: 'password123',
-      confirmPassword: 'password123'
     });
     expect(component.isToastOpen).toBeTrue();
   });

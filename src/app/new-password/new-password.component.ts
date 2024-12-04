@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserService } from '../services/user.service';
+import { BluetoothSerial } from '@ionic-native/bluetooth-serial/ngx';
+import { AlertController, ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-new-password',
@@ -75,7 +77,7 @@ export class NewPasswordComponent implements OnInit {
     if (this.newPasswordForm.valid) {
       const { cpf, password, confirmPassword } = this.newPasswordForm.value;
       if (password === confirmPassword) {
-        this.userService.updatePassword({ cpf, password, confirmPassword }).subscribe({
+        this.userService.updatePassword({ cpf, password }).subscribe({
           next: response => {
             this.isToastOpen = true;
           },
