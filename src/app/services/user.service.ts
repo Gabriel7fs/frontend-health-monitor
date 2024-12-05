@@ -64,6 +64,6 @@ export class UserService {
     } else {
       errorMessage = `Código de erro: ${error.status}\nMensagem: ${error.message}`;
     }
-    return throwError(errorMessage);
+    return throwError(() => new Error(errorMessage));
   }
 }
