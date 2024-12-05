@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserService } from '../services/user.service';
-import { BluetoothSerial } from '@ionic-native/bluetooth-serial/ngx';
-import { AlertController, ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-new-password',
