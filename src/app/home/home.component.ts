@@ -141,8 +141,12 @@ export class HomeComponent implements OnDestroy {
           'danger'
         );
         break;
-      default:
-        console.log('Todos os sinais vitais estão dentro do intervalo normal.');
+      case bpm < 60 && bpm > 100 && spo2 > 90:
+        this.showToast(
+          'Paciente está apresentando caso de insuficiência cardiaca, bpm com batimentos irregulares e SpO2 abaixo de 90%',
+          'danger'
+        );
+        break;
     }
   }
 
