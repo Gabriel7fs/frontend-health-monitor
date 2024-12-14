@@ -9,8 +9,8 @@ import { catchError } from 'rxjs/operators';
 })
 export class RegisterService {
 
-  private apiUrl = 'http://localhost:8080/api/user';
-  // private apiUrl = 'https://thehealthmonitor.cloud/api/user';
+  // private apiUrl = 'http://localhost:8080/api/user';
+  private apiUrl = 'https://thehealthmonitor.cloud/api/user';
 
   constructor(private http: HttpClient) {}
 

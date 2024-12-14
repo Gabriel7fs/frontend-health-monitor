@@ -9,8 +9,8 @@ import { WebsocketService } from './websocket.service';
 })
 export class LoginService {
 
-  private loginUrl =  'http://localhost:8080/api/auth/login';
-  // private loginUrl =  'https://thehealthmonitor.cloud/api/auth/login';
+  // private loginUrl =  'http://localhost:8080/api/auth/login';
+  private loginUrl =  'https://thehealthmonitor.cloud/api/auth/login';
 
   constructor(
     private http: HttpClient,

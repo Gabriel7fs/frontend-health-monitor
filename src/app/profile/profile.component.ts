@@ -152,6 +152,6 @@ export class ProfileComponent implements OnInit {
   logout() {
     this.websocketService.disconnect();
     this.loginService.logout();
-    this.router.navigate(['/login']);
+    this.router.navigate(['/start-screen']);
   }
 }
