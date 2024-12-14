@@ -8,13 +8,13 @@ import { catchError, tap } from 'rxjs/operators';
 })
 export class UserService {
 
-  private dashboardUrl = 'http://localhost:8080/api/user/dashboard';
-  private updateUserUrl = 'http://localhost:8080/api/user';
-  private updatePasswordUrl = 'http://localhost:8080/api/user/change-password';
+  // private dashboardUrl = 'http://localhost:8080/api/user/dashboard';
+  // private updateUserUrl = 'http://localhost:8080/api/user';
+  // private updatePasswordUrl = 'http://localhost:8080/api/user/change-password';
 
-  // private dashboardUrl = 'https://thehealthmonitor.cloud/api/user/dashboard';
-  // private updateUserUrl = 'https://thehealthmonitor.cloud/api/user';
-  // private updatePasswordUrl = 'https://thehealthmonitor.cloud/api/user/change-password';
+  private dashboardUrl = 'https://thehealthmonitor.cloud/api/user/dashboard';
+  private updateUserUrl = 'https://thehealthmonitor.cloud/api/user';
+  private updatePasswordUrl = 'https://thehealthmonitor.cloud/api/user/change-password';
 
   constructor(private http: HttpClient) { }
 

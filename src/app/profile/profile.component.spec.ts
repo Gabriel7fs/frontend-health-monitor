@@ -90,7 +90,7 @@ describe('ProfileComponent', () => {
   it('should call logout and navigate to login on logout', () => {
     component.logout();
     expect(mockLoginService.logout).toHaveBeenCalled();
-    expect(mockRouter.navigate).toHaveBeenCalledWith(['/login']);
+    expect(mockRouter.navigate).toHaveBeenCalledWith(['/start-screen']);
   });
 
   it('should open modal and scan for devices on setOpen(true)', async () => {

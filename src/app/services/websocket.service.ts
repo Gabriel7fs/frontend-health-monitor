@@ -15,8 +15,8 @@ export class WebsocketService {
   constructor() {}
 
   connect(id: any) {
-    const socket = new SockJS('http://localhost:8080/api/ws');
-    // const socket = new SockJS('https://thehealthmonitor.cloud/api/ws');
+    // const socket = new SockJS('http://localhost:8080/api/ws');
+    const socket = new SockJS('https://thehealthmonitor.cloud/api/ws');
     this.stompClient = Stomp.over(socket);
 
     this.stompClient.connect({}, (frame: any) => {
